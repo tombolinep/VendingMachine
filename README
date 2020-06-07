@@ -252,7 +252,7 @@ Design Considerations and discussion
 			-	Reverse the entry set  -  O(n)
 			-	Iterate over each element in the entry set  -  O(n)
 			- 	Attempt to add the coin  -  O(1) due to accessing a Map
-			-   Repeat n number of times depending on the coin quantity (in the worst case n times) 
+			- 	Repeat n number of times depending on the coin quantity (in the worst case n times) 
 		
 		Overall Time complexity: 
 			O(n) + O(n) + O(1) + O(n)  ->  O(3n + 1)  ->  O(n)
@@ -264,8 +264,8 @@ Design Considerations and discussion
 		The prominent components: 
 		
 			- 	The coin quantity counter O(n)
-			-   The entry set  O(n)
-			-   The list to track which coins we've added  O(n)
+			- 	The entry set  O(n)
+			- 	The list to track which coins we've added  O(n)
 		
 		Overall Space complexity:
 			O(n) + O(n) + O(n)  ->  O(n)
