@@ -294,6 +294,25 @@ class TestVendingMachine
 
 		Assert.assertTrue(coinsTotal == 1000);
 	}
+	
+	/**
+	 * Verifies ability to produce coins for an input of 0
+	 */
+	@Test
+	void testProduceCoinsValidZero()
+	{
+		vm = new VendingMachine(initCoins10); // 10 of each coin
+
+		ArrayList<GBPCoin> coinsToDispense = vm.proceduceCoins(0); // £0.00
+
+		int coinsTotal = 0;
+		for (GBPCoin coin : coinsToDispense)
+		{
+			coinsTotal += coin.getValue();
+		}
+
+		Assert.assertTrue(coinsTotal == 0);
+	}
 
 	/**
 	 * Verifies ability to produce coins to identify an input sum that is too large

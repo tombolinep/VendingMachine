@@ -1,7 +1,7 @@
 README
 
+Vending Machine Solution for Oracle Coding Challenge
 
-Vending Machine
 Peter Tomboline, 07/06/2020
 
 ==========================
@@ -9,19 +9,18 @@ Contents
 ==========================
 
  	1. About
-	2. Download / Installation
-	3. The API
-	4. Design Considerations
-
+	2. Download / Installation / Execution
+	3. The Vending Machine API (run via the Console)
+	4. Design Consideration and discussion
 
 ==========================
 About
 ==========================
 
 	This repository contains a solution for to the Oracle Vending Machine Coding challenge.
-	
-	The codebase was implemented in Java 1.8 using the Eclipse IDE. It is recommended to import  
-	these projects into Eclipse.
+
+	Specification:
+	---------------
 
 	You work for a firm which produces vending machines, currently for the UK market, and you are
 	responsible for a new software component that tracks change (as in coins) within the vending
@@ -41,33 +40,292 @@ About
 
 
 ==========================
-Download / Installation
+Download / Installation / Execution
 ==========================
 
+	Repository Location: https://github.com/PeterT95/VendingMachine
 
 
-==========
-
-==========
-
-
-
-
-
-Design considerations :
-
-
-1) GBP Coins 
-
-
-
-
-2) Vending Machine
-
-	floats in imprecise so need to use math.round to remove imprecision
+	Prerequisites
+	--------------
 	
-	considerations surrounding how to distribute 
+		- Java 1.8 installed  - developed using Version: 1.8.0._161
+		- Eclipse installed   - developed using Version: Oxygen.3a Release (4.7.3a)
+		- Git installed       - developed using Version: 2.18.0.windows.1
+		
+	This code was developed using Java 1.8 in the Eclipse IDE in a Windows 10 environment. It is recommended 
+		to import the projects into Eclipse on a Windows environment, but should be possible to import Eclipse projects
+		into a Linux/Unix distribution.
+	    
+	    It is recommended for the program to be Executed inside of the Eclipse IDE. It might be possible to compile
+	    the code via the terminal and execute the 'InterativeSolution.java' class, but this has not been tested.
+     
+	
+	
+	Instructions: 
+	---------------
+	
+	1) Clone the repository 
+	
+		- Create an empty directory in preferred location (recommended User's Desktop)
+		- Open the Command Line / Terminal and navigate to this location
+		- With Git installed, clone the repository: 
+		
+		$ git clone https://github.com/PeterT95/VendingMachine.git .
+	
+	
+	2) Import Projects into Eclipse
+	 
+		2.a) Open Eclipse (creating a workspace if necessary)
+			- If this is the first time loading Eclipse, close the Welcome screen 
+		
+		2.b) Extract the Projects from the Git repository:
+			- Navigate to 'File -> Import'	
+			- Select 'Git -> Projects from Git' then press Next
+			- Select 'Existing local repository' then press Next
+			- Click 'Add' in the top right
+			- Press Browse 
+			- Navigate to where the Git repository was clone from (User's Desktop in this example)
+			- Select the Folder and press 'Ok'
+			- Tick the repository selected and press 'Finish'
+			
+		2.c) Import the Projects from the Repository into the Eclipse Workspace
+		- Select the repository and press 'Finish'
+		
+	
+	3) Execution 
+	
+		This Vending Machine project is broken down into two packages under the src folder
+		
+		- main   (java classes)
+		- junit  (junit test cases)
+		
+		
+		3.a) To execute the interactive section of the Vending Machine: 
+			- Navigate to 'VendingMachine/src/main/InteractiveSolution.java'
+			- Execute via the Run command at the top of the Eclipse IDE
+			- Ensure that the Console output perspective is being displayed
+			- Click into the console to type and use the API provided to interact with the Vending Machine
+			- Vending Machine initialisation can be edited from this class in the main method
+		
+		3.b) To execute the junit test cases
+			- Navigate to 'VendingMachine/src/junit'
+			- Open either of the following: 'TestGBPCoin.java'  or  'TestVendingMachine.java'
+			- Execute via the Run command at the top of the Eclipse IDE
+		
+
+
+======================================
+Design Considerations and discussion
+======================================
+	
+	GBPCoin
+	--------
+	As per the requirements the currency for this vending machine is GBP Coins.
+	There are 9 minted coins in GBP: 1p, 2p, 5p, 10p, 20p, 50p, £1, £2 and £5.
+	
+	Given this information is it critical to protect the coin class to prevent invalid coins from being created.
+	This will help protect against "bad" input into the vending machine itself.
+	
+	The necessary data the coin objects need to carry are: The name of the coin and the value of the coin.
+	
+	As such, the key point to discuss about the GBPCoin class is the constructor: 
+	
+	
+	1) Protecting the GBPCoin constructor: 
+	
+		The coin can be instantiated with either the name of the coin or the value of the coin (in pence).#
+		This provides some flexibility to the user for the interaction without being too restrictive. 
+	
+		An IllegalArgumentException is thrown (and caught) if:
+			- the name of the coin is not currently minted (i.e. one of 9 above)
+			- the value of the coin does not match a coin currently minted 	
+
+		A mapping function is used for either constructor to ensure that only valid coins are instantiated, 
+		e.g. a coin created with the name "10p" will automatically be assigned the value of 10. 
 
 
 
+
+	Vending Machine 
+	----------------
+	
+	As the main component of this solution and some ambiguity in the task specification, there are a few more items
+	to discuss for the Vending Machine class. The Vending Machine class provides a constructor that sets the initial
+	float (the starting coins), along with 4 critical methods. 
+	
+	1) Setting the initial float of the Vending Machine
+	
+		My Vending Machine objects take an int[] of the quantity of coins in order to create. The array must be 
+		length of 9 so that a value for each minted coin is set. The indexes of the array related to a given coin
+		rising in ascending order, with index 1 representing 1p coin, for example.
+
+
+	2) Internal Data Model
+	
+		I chose to use a Map<String coinName, Integer quantity> for the internal Vending Machine model as this was the most
+		intuitive data structure for keeping track of the coins and their quantity. The Map data structure provides O(1)
+		complexity of insert, delete and access which is advantageous for the Vending Machine as the main functions are to
+		deposit (insert), dispense (delete) as well as updating the user with the internal model (access).
+		
+		The Map type that I chose to use was a TreeMap as it improves the usability of the interactive portion of the 
+		solution if the keys of all the Coins maintain a given order (ascending in value). This can be seen in the 
+		console when the check function is used.  
+
+
+	3) Protecting the constructor
+	
+		As with the GBPCoin class, the Vending Machine class constructor must also be protected to avoid any "bad" 
+		initialisations and to maintain integrity and consistency of the internal data.
+		
+		As such, the instantiating int[] must contain a value for each coin as this provides a good tradeoff 
+		between simplicity and control. It is preferable that the user provides all of the required information so
+		that inferences are not necessary. If inferences were necessary then a great deal more validation of the 
+		input would be required to maintain consistency of the internal data.
+
+		The constructor will throw (and catch) an IllegalArgumentException if: 
+		
+		- The input int[] does not have a length of 9 (one index maps to one coin)
+		- The input int[] contains a negative value 
+
+
+	4) The deposit coin method
+		
+		The depositCoin method takes the name of the coin to deposit as an argument. This is then used 
+		to create a GBPCoin object which is then 'inserted' into the internal Model. Strictly speaking the coin itself
+		is not inserted into the model, the coin should already exist as a key in the model. However, it is advantageous
+		to take advantages of the protection of the GBPCoin constructor to ensure that what is being deposited is a 
+		valid GBP coin. Ultimately when the user calls deposit coin they create a GBPCoin which is checked for integrity
+		and then the internal model map quantity for this coin is incremented if the coin is valid.
+		
+		
+	5) The produce coins method
+	
+		The produceCoins method takes an input which is the value of the coins to dispense, if possible. 
+		As this is the main algorithm of the data structure there are a few points to discuss here.
+		
+		Firstly, it is sensible for the  produceCoin method to take the value in pence because this is the simplest input
+		that underlies each of the GBP coins. Using pence also eliminates the need to create multiple methods of conversion 
+		for differing inputs (i.e. £1.50, 50p, £1 + 50p, 150 pennies etc). Moreover, given enough coins, it is possible 
+		to create any amount of pence specified so no information is lost by taking the input as pence.
+		
+		Secondly, the input value is screened in order to optimise the algorithm by preventing unnecessary calculation if possible.
+		The following scenarios will throw (and catch) an IllegalArgumentException against the input value given: 
+		
+			- The given target  a negative value
+			- The target value exceeds the current funds available in the vending machine
+		
+		Thirdly, if the input value of the input is technically achievable from the value of the in the machine but the specific coins themselves
+		are not, then a RunTimeException is thrown (and caught) after trying to calculate and dispense the coins from the machine. This logs
+		a message to the user that the Vending Machine is not able to dispense the change.
+		
+		
+	6) The produce coins calculation algorithm
+	
+		The actual algorithm used by the produceCoins method has a few notable points to discuss. The gist of the algorithm is to: 
+		Iterate over each coin in the model, starting with the largest first. If adding this coin does not exceed the target value, then
+		add it and keep track of what coin we've added. Repeat this process for this particular type of coin until either the the quantity
+		of the coin we have is 0 or that adding another of this coin would exceed the target value. If either one of these conditions are met,
+		we immediately move onto the next coin in the sequence until all coins have been evaluated. The exception to this is if we have managed
+		to reach our target, in which case the algorithm is immediately terminated with the coins required captured as data. 
+		
+		Firstly, the algorithm makes use of the Map<Coin, Quantity> internal model of the data structure. This relies heavily upon the access
+		Map method to interrogate the data. A design point I made here was to create a TreeMap, and this is also particularly advantageous in 
+		terms of time complexity for the algorithm because we can order the EntrySet of the map in descending order. This reverse operation 
+		results in O(n) in terms of time complexity, but as a result, larger coins are preferred by the algorithm. As a result this should
+		reduce the number of iterations needed for over all other coins.
+		
+		Secondly, checks are used on each coin in the entry set before they are attempted to be added. If we don't have any (more) of the
+		coin being evaluated then we don't try to add it. If adding the coin exceeds the target value then don't add it and move on to the next. 
+		If adding the coin will let us reach the target value then we store the coins and terminate the algorithm.
+		
+		
+	7) Evaluating the algorithm (my best reasoning given my current understanding!) 
+	
+		Time complexity: 
+		-----------------
+	
+		The prominent operations of the algorithm: 
+		
+			-	Reverse the entry set  -  O(n)
+			-	Iterate over each element in the entry set  -  O(n)
+			- 	Attempt to add the coin  -  O(1) due to accessing a Map
+			-   Repeat n number of times depending on the coin quantity (in the worst case n times) 
+		
+		Overall Time complexity: 
+			O(n) + O(n) + O(1) + O(n)  ->  O(3n + 1)  ->  O(n)
+		
+		
+		Space Complexity 
+		-----------------
+		
+		The prominent components: 
+		
+			- 	The coin quantity counter O(n)
+			-   The entry set  O(n)
+			-   The list to track which coins we've added  O(n)
+		
+		Overall Space complexity:
+			O(n) + O(n) + O(n)  ->  O(n)
+		
+		
+	8) Dispense coins 
+		
+		Taking the List of coins calculated from the producecoins method as an input, the dispense coins methods will iterate over each coin,
+		accessing the coin in the map as a key and capturing the quantity via the value. A new value is put into the map on this key with a 
+		decrement of 1. The result is that the coins will have been dispensed (removed).
+		Note that if the producecoins method does not conclude nominally (either an exception is thrown and caught or the number of coins are
+		not sufficient, then no coins will be dispensed as a result.
+		
+		
+	9) Interactive architecture  
+	
+		The interactive architecture is influenced by a very basic client-server model, where the Scanner is a pseudo server for taking user input.
+		By controlling the user input in this sense it is possible to leverage the API designed so that methods are called appropriately without
+		inhibiting usability of the program.
+	
+
+
+==============================================
+The Vending Machine API (run via the Console)
+==============================================
+
+	The Vending Machine solution has 4 methods in the API: 
+	
+	
+	1) deposit <coin_name>
+	
+		The deposit method adds a coin to the Vending Machine (simulating inserting a GBP coin).
+		With interaction in mind, the user can specify the coin by name to deposit into the vending machine
+		
+		For example:
+		
+		deposit 10p    // deposits 10p into the vending machine and updates the internal funds
+		deposit £1     // deposits £1 into the vending machine and updates the internal funds
+		
+	
+	2) producecoins <value_in_pence>
+		
+		Using only the coins already in the Vending Machine, the producecoins method attempts to calculate the 
+		coins to be dispensed from the Vending Machine that sum to given the value (which is specified in pence). 
+		
+		For example: 
+		
+		producecoins 100    // attempts to use available coins to dispense 100p (£1)
+		producecoins 3050   // attempts to use available coins to dispense 3050p (£35.50)
+	
+	
+	3) check
+	
+		Checks the Vending Machine's existing funds for each of the coins and also returns the total of the coins
+		held in the machine.
+		
+		For example
+		
+		check  	// Produces a map<coin, quantity> of all valid coins currently in the machine 
+
+
+	4) exit 
+	
+		Terminates the program
 
