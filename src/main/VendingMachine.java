@@ -51,8 +51,9 @@ public class VendingMachine
 
 		if (aInitCoins.length != 9)
 		{
-			throw new IllegalArgumentException("Must specify quantity of each type of GBP coin to deposit: "
+			System.out.println("Must specify quantity of each type of GBP coin to deposit: "
 					+ "1p, 2p, 5p, 10p, 20p, 50p, £1, £2, £5 (9 total)");
+			return;
 		}
 
 		else
@@ -62,7 +63,8 @@ public class VendingMachine
 			{
 				if (i < 0)
 				{
-					throw new IllegalArgumentException("Quantity of coins cannot be negative!");
+					System.out.println("Quantity of coins cannot be negative!");
+					return;
 				}
 			}
 
@@ -235,15 +237,14 @@ public class VendingMachine
 
 		if (aTargetValue < 0) // Defend against negative input
 		{
-			throw new IllegalArgumentException(
-					"Cannot produce coins for negative input £" + Double.valueOf(aTargetValue) / 100);
+			System.out.println("Cannot produce coins for negative input £" + Double.valueOf(aTargetValue) / 100);
 		}
 
 		else
 		{
 			if (!hasSufficientFunds(aTargetValue)) // Check we aren't requesting more funds than available
 			{
-				throw new IllegalArgumentException(
+				System.out.println(
 						"Insufficient funds in Vending Machine to create £" + Double.valueOf(aTargetValue) / 100);
 			}
 
@@ -301,7 +302,7 @@ public class VendingMachine
 			if (runningTotal < aTargetValue) // Check we had the coins necessary for target
 			{
 				mCoinsDispensed.clear();
-				throw new RuntimeException("Not able to create " + aTargetValue + " with available coins");
+				System.out.println("Not able to create " + aTargetValue + " with available coins!");
 			}
 
 			System.out.println("For amount: £" + Double.valueOf(aTargetValue) / 100 + ", Coins dispensed: "
@@ -352,7 +353,7 @@ public class VendingMachine
 	 */
 	public void dispenseCoins(ArrayList<GBPCoin> coins)
 	{
-		
+
 		for (GBPCoin coin : coins)
 		{
 			int currentQuantity = mCoinQuantityMap.get(coin);
