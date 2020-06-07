@@ -223,23 +223,23 @@ Design Considerations and discussion
 		
 	6) The produce coins calculation algorithm
 	
-		The actual algorithm used by the produceCoins method has a few notable points to discuss. The gist of the algorithm is to:
-		Iterate over each coin in the model, starting with the largest first. If adding this coin does not exceed the target value,
-		then add it and keep track of what coin we've added. Repeat this process for this particular type of coin until either the the
-		quantity of the coin we have is 0 or that adding another of this coin would exceed the target value. If either one of these
-		conditions are met, we immediately move onto the next coin in the sequence until all coins have been evaluated. The exception
-		to this is if we have managed to reach our target, in which case the algorithm is immediately terminated with the coins required 
-		captured as data.
+		The actual algorithm used by the produceCoins method has a few notable points to discuss. The gist of the algorithm is 
+		to: Iterate over each coin in the model, starting with the largest first. If adding this coin does not exceed the target 
+		value, then add it and keep track of what coin we've added. Repeat this process for this particular type of coin until
+		either the the quantity of the coin we have is 0 or that adding another of this coin would exceed the target value. If 
+		either one of these conditions are met, we immediately move onto the next coin in the sequence until all coins have been 
+		evaluated. The exception to this is if we have managed to reach our target, in which case the algorithm is immediately 
+		terminated with the coins required captured as data.
 		
-		Firstly, the algorithm makes use of the Map<Coin, Quantity> internal model of the data structure. This relies heavily upon the access
-		Map method to interrogate the data. A design point I made here was to create a TreeMap, and this is also particularly advantageous in
-		terms of time complexity for the algorithm because we can order the EntrySet of the map in descending order. This reverse operation
-		results in O(n) in terms of time complexity, but as a result, larger coins are preferred by the algorithm. As a result this should
-		reduce the number of iterations needed for over all other coins.
+		Firstly, the algorithm makes use of the Map<Coin, Quantity> internal model of the data structure. This relies heavily upon
+		the access Map method to interrogate the data. A design point I made here was to create a TreeMap, and this is also 
+		particularly advantageous in terms of time complexity for the algorithm because we can order the EntrySet of the map in 
+		descending order. This reverse operation results in O(n) in terms of time complexity, but as a result, larger coins are 
+		preferred by the algorithm. As a result this should reduce the number of iterations needed for over all other coins.
 		
-		Secondly, checks are used on each coin in the entry set before they are attempted to be added. If we don't have any (more) of the
-		coin being evaluated then we don't try to add it. If adding the coin exceeds the target value then don't add it and move on to the next.
-		If adding the coin will let us reach the target value then we store the coins and terminate the algorithm.
+		Secondly, checks are used on each coin in the entry set before they are attempted to be added. If we don't have any (more)
+		of the coin being evaluated then we don't try to add it. If adding the coin exceeds the target value then don't add it and 
+		move on to the next. If adding the coin will let us reach the target value then we store the coins and terminate the algorithm.
 		
 		
 	7) Evaluating the algorithm (my best reasoning given my current understanding!) 
