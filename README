@@ -215,19 +215,21 @@ Design Considerations and discussion
 			- The given target  a negative value
 			- The target value exceeds the current funds available in the vending machine
 		
-		Thirdly, if the input value of the input is technically achievable from the value of the in the machine but the specific coins themselves
-		are not, then a RunTimeException is thrown (and caught) after trying to calculate and dispense the coins from the machine. This logs
-		a message to the user that the Vending Machine is not able to dispense the change.
+		Thirdly, if the input value of the input is technically achievable from the value of the in the machine but 
+		the specific coins themselves are not, then a RunTimeException is thrown (and caught) after trying to calculate 
+		and dispense the coins from the machine. This logs  a message to the user that the Vending Machine is not able
+		to dispense the change.
 		
 		
 	6) The produce coins calculation algorithm
 	
 		The actual algorithm used by the produceCoins method has a few notable points to discuss. The gist of the algorithm is to:
-		Iterate over each coin in the model, starting with the largest first. If adding this coin does not exceed the target value, then
-		add it and keep track of what coin we've added. Repeat this process for this particular type of coin until either the the quantity
-		of the coin we have is 0 or that adding another of this coin would exceed the target value. If either one of these conditions are met,
-		we immediately move onto the next coin in the sequence until all coins have been evaluated. The exception to this is if we have managed
-		to reach our target, in which case the algorithm is immediately terminated with the coins required captured as data.
+		Iterate over each coin in the model, starting with the largest first. If adding this coin does not exceed the target value,
+		then add it and keep track of what coin we've added. Repeat this process for this particular type of coin until either the the
+		quantity of the coin we have is 0 or that adding another of this coin would exceed the target value. If either one of these
+		conditions are met, we immediately move onto the next coin in the sequence until all coins have been evaluated. The exception
+		to this is if we have managed to reach our target, in which case the algorithm is immediately terminated with the coins required 
+		captured as data.
 		
 		Firstly, the algorithm makes use of the Map<Coin, Quantity> internal model of the data structure. This relies heavily upon the access
 		Map method to interrogate the data. A design point I made here was to create a TreeMap, and this is also particularly advantageous in
@@ -271,18 +273,18 @@ Design Considerations and discussion
 		
 	8) Dispense coins 
 		
-		Taking the List of coins calculated from the producecoins method as an input, the dispense coins methods will iterate over each coin,
-		accessing the coin in the map as a key and capturing the quantity via the value. A new value is put into the map on this key with a
-		decrement of 1. The result is that the coins will have been dispensed (removed).
-		Note that if the producecoins method does not conclude nominally (either an exception is thrown and caught or the number of coins are
-		not sufficient, then no coins will be dispensed as a result.
+		Taking the List of coins calculated from the producecoins method as an input, the dispense coins methods will iterate
+		over each coin, accessing the coin in the map as a key and capturing the quantity via the value. A new value is put
+		into the map on this key with a decrement of 1. The result is that the coins will have been dispensed (removed).
+		Note that if the producecoins method does not conclude nominally (either an exception is thrown and caught or the
+		number of coins are not sufficient, then no coins will be dispensed as a result.
 		
 		
 	9) Interactive architecture  
 	
-		The interactive architecture is influenced by a very basic client-server model, where the Scanner is a pseudo server for taking user input.
-		By controlling the user input in this sense it is possible to leverage the API designed so that methods are called appropriately without
-		inhibiting usability of the program.
+		The interactive architecture is influenced by a very basic client-server model, where the Scanner is a pseudo server for taking
+		user input. By controlling the user input in this sense it is possible to leverage the API designed so that methods are called 
+		appropriately without inhibiting usability of the program.
 	
 
 
