@@ -1,0 +1,73 @@
+README
+
+
+Vending Machine
+Peter Tomboline, 07/06/2020
+
+==========================
+Contents   
+==========================
+
+ 	1. About
+	2. Download / Installation
+	3. The API
+	4. Design Considerations
+
+
+==========================
+About
+==========================
+
+	This repository contains a solution for to the Oracle Vending Machine Coding challenge.
+	
+	The codebase was implemented in Java 1.8 using the Eclipse IDE. It is recommended to import  
+	these projects into Eclipse.
+
+	You work for a firm which produces vending machines, currently for the UK market, and you are
+	responsible for a new software component that tracks change (as in coins) within the vending
+	machines.
+	
+	This component needs to provide APIs which:
+	
+	>  Initialise the vending machine to a known state, for use when the machine is set up. This
+	should include setting the initial float (the coins placed in the machine for customer change)
+	which should be accepted as a parameter.
+	
+	> Register coins that have been deposited by a user.
+	
+	> Produce a collection of coins that sum to a particular value (accepted as a parameter) from
+	the coins available in the machine (for the purpose of returning change to the user) and
+	remove the coins from the machine.
+
+
+==========================
+Download / Installation
+==========================
+
+
+
+==========
+
+==========
+
+
+
+
+
+Design considerations :
+
+
+1) GBP Coins 
+
+
+
+
+2) Vending Machine
+
+	floats in imprecise so need to use math.round to remove imprecision
+	
+	considerations surrounding how to distribute 
+
+
+
+
