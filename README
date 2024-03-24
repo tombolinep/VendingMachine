@@ -1,9 +1,3 @@
-README
-
-Vending Machine Solution for Oracle Coding Challenge
-
-Peter Tomboline, 07/06/2020
-
 ==========================
 Contents   
 ==========================
@@ -17,7 +11,7 @@ Contents
 About
 ==========================
 
-	This repository contains a solution for to the Oracle Vending Machine Coding challenge.
+	This repository contains a solution for to the Vending Machine Coding challenge.
 
 	Specification:
 	---------------
@@ -122,7 +116,7 @@ Design Considerations and discussion
 	GBPCoin
 	--------
 	As per the requirements the currency for this vending machine is GBP Coins.
-	There are 9 minted coins in GBP: 1p, 2p, 5p, 10p, 20p, 50p, £1, £2 and £5.
+	There are 9 minted coins in GBP: 1p, 2p, 5p, 10p, 20p, 50p, Â£1, Â£2 and Â£5.
 	
 	Given this information is it critical to protect the coin class to prevent invalid coins from being created.
 	This will help protect against "bad" input into the vending machine itself.
@@ -206,7 +200,7 @@ Design Considerations and discussion
 		
 		Firstly, it is sensible for the  produceCoin method to take the value in pence because this is the simplest input
 		that underlies each of the GBP coins. Using pence also eliminates the need to create multiple methods of conversion 
-		for differing inputs (i.e. £1.50, 50p, £1 + 50p, 150 pennies etc). Moreover, given enough coins, it is possible 
+		for differing inputs (i.e. Â£1.50, 50p, Â£1 + 50p, 150 pennies etc). Moreover, given enough coins, it is possible 
 		to create any amount of pence specified so no information is lost by taking the input as pence.
 		
 		Secondly, the input value is screened in order to optimise the algorithm by preventing unnecessary calculation if possible.
@@ -303,7 +297,7 @@ The Vending Machine API (run via the Console)
 		For example:
 		
 		deposit 10p    // deposits 10p into the vending machine and updates the internal funds
-		deposit £1     // deposits £1 into the vending machine and updates the internal funds
+		deposit Â£1     // deposits Â£1 into the vending machine and updates the internal funds
 		
 	
 	2) producecoins <value_in_pence>
@@ -313,8 +307,8 @@ The Vending Machine API (run via the Console)
 		
 		For example: 
 		
-		producecoins 100    // attempts to use available coins to dispense 100p (£1)
-		producecoins 3050   // attempts to use available coins to dispense 3050p (£35.50)
+		producecoins 100    // attempts to use available coins to dispense 100p (Â£1)
+		producecoins 3050   // attempts to use available coins to dispense 3050p (Â£35.50)
 	
 	
 	3) check
